@@ -5,17 +5,19 @@ public class NumbersCat {
         if (n == 0)
             return "Zero";
         String resultat = "";
-        /*Pasam el numero a un array d'strings
-        String number = String.valueOf(n);
-        String[] numberDigits = number.split("(?<=.)");*/
 
-
-        if (Math.abs(n) < 100) {
-            resultat = desenes(n);
-            resultat += nums0_19(n);
+        if (Math.abs(n) < 100 && Math.abs(n) >= 20) {
+            resultat += desenes(n);
+            n = n % 10;
+            if (Math.abs(n) < 20 && Math.abs(n) != 0) {
+                if (resultat.equals("vint"))
+                    resultat += "-i-";
+                else
+                resultat += "-";
+            }
         }
         if (Math.abs(n) < 20)
-            resultat = nums0_19(n);
+            resultat += nums0_19(n);
 
         if (n < 0)
             resultat = "menys " + resultat;
