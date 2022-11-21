@@ -1,7 +1,7 @@
 public class Proves {
     public static void main(String[] args) {
         long n = 242;
-        long sobrant = n%10;
+        long sobrant = n%100;
         System.out.println(sobrant);
 
 
