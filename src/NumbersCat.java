@@ -2,15 +2,26 @@
 public class NumbersCat {
 
     public static String say(long n) {
+        //Zero es una exepció que només es dona en aquest cas
         if (n == 0)
             return "Zero";
         String resultat = "";
 
-        if (Math.abs(n) < 10000 && Math.abs(n) >= 1000){
+        if (Math.abs(n) < 1000000 && Math.abs(n) >= 1000){
             resultat += milenes(n);
             n = n % 1000;
         }
 
+        //Sumam les ultimes unitats al resultat
+        resultat = unitatsaCentenes(n, resultat);
+
+        //eliminam tots els espais sobrants i posam la primera en mayuscules
+        resultat = resultat.trim().replaceAll("\\s{2,}", " ");
+        return resultat.substring(0, 1).toUpperCase() + resultat.substring(1);
+    }
+
+    //Funció del 1 al 999
+    private static String unitatsaCentenes(long n, String resultat) {
         if (Math.abs(n) < 1000 && Math.abs(n) >= 100) {
             resultat += centenes(n) + " ";
             n = n % 100;
@@ -34,28 +45,14 @@ public class NumbersCat {
 
         if (n < 0)
             resultat = "menys " + resultat;
-
-        return resultat.substring(0, 1).toUpperCase() + resultat.substring(1).trim();
+        return resultat;
     }
 
     private static String milenes(long n) {
         String milena = "";
-        /* //n = 320 001
-        //Centenes antes del mil
-        if (n/100000 > 0)
-        milena += centenes(n/1000);
-
-        //Desenes antes del mil *Malament
-        if (n/10000 > 0)
-        milena += desenes(n/10000);
-
-        //Unitats antes del mil *Malament
-        if (n/1000 > 0)
-        milena += nums0_19(n/100000);
-
-        //2000*/
-        if (n/1000 > 1)
-        milena += nums0_19(n/1000);
+        if (n < 2000)
+            return "mil ";
+        milena = unitatsaCentenes((n/1000), milena);
         return milena + " mil ";
     }
 
