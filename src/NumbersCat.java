@@ -22,7 +22,7 @@ public class NumbersCat {
         }
 
         //Sumam les ultimes unitats al resultat
-        resultat = unitatsaCentenes(n, resultat);
+        resultat += unitatsaCentenes(n);
         //Posam el menys si és negatiu
         if (negatiu)
             resultat = "menys " + resultat;
@@ -34,9 +34,12 @@ public class NumbersCat {
     private static String millons(long n) {
         String resultat = "";
         if (n/1000 < 1_000_000)
-            resultat = unitatsaCentenes(n/1_000_000, resultat);
+            resultat = unitatsaCentenes(n/1_000_000);
         else {
             resultat = milenes(n/1_000_000);
+
+            long nres = (n/1_000_000) % 1000;
+            resultat += unitatsaCentenes(nres);
         }
 
         if (n < 2_000_000)
@@ -45,7 +48,8 @@ public class NumbersCat {
     }
 
     //Funció del 1 al 999
-    private static String unitatsaCentenes(long n, String resultat) {
+    private static String unitatsaCentenes(long n) {
+        String resultat = "";
         if (n < 1000 && n >= 100) {
             resultat += centenes(n) + " ";
             n = n % 100;
@@ -76,7 +80,7 @@ public class NumbersCat {
         String milena = "";
         if (n < 2000)
             return "mil ";
-        milena = unitatsaCentenes((n/1000), milena);
+        milena = unitatsaCentenes((n/1000));
         return milena + " mil ";
     }
 
