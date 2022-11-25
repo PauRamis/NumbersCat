@@ -6,19 +6,26 @@ public class NumbersCat {
         if (n == 0)
             return "Zero";
         String resultat = "";
+        boolean negatiu = false;
+        if (n < 0){
+            negatiu = true;
+            n = -n;
+        }
 
-        if (Math.abs(n) < 1_000_000_000_000L && Math.abs(n) >= 1_000_000){
+        if (n < 1_000_000_000_000L && n >= 1_000_000){
             resultat += millons(n);
             n = n % 1_000_000;
         }
-        if (Math.abs(n) < 1_000_000 && Math.abs(n) >= 1000){
+        if (n < 1_000_000 && n >= 1000){
             resultat += milenes(n);
             n = n % 1000;
         }
 
         //Sumam les ultimes unitats al resultat
         resultat = unitatsaCentenes(n, resultat);
-
+        //Posam el menys si és negatiu
+        if (negatiu)
+            resultat = "menys " + resultat;
         //eliminam tots els espais sobrants i posam la primera en mayuscules
         resultat = resultat.trim().replaceAll("\\s{2,}", " ");
         return resultat.substring(0, 1).toUpperCase() + resultat.substring(1);
@@ -28,7 +35,9 @@ public class NumbersCat {
         String resultat = "";
         if (n/1000 < 1_000_000)
             resultat = unitatsaCentenes(n/1_000_000, resultat);
-        else resultat = milenes(n/1_000_000);
+        else {
+            resultat = milenes(n/1_000_000);
+        }
 
         if (n < 2_000_000)
             return resultat + " milió ";
@@ -37,25 +46,25 @@ public class NumbersCat {
 
     //Funció del 1 al 999
     private static String unitatsaCentenes(long n, String resultat) {
-        if (Math.abs(n) < 1000 && Math.abs(n) >= 100) {
+        if (n < 1000 && n >= 100) {
             resultat += centenes(n) + " ";
             n = n % 100;
         }
 
-        if (Math.abs(n) < 100 && Math.abs(n) >= 20) {
+        if (n < 100 && n >= 20) {
             boolean vintena = false;
             resultat += desenes(n);
             if (desenes(n) == "vint" )
                 vintena = true;
             n = n % 10;
-            if (Math.abs(n) < 20 && Math.abs(n) != 0) {
+            if (n < 20 && n != 0) {
                 if (vintena == true)
                     resultat += "-i-";
                 else
                     resultat += "-";
             }
         }
-        if (Math.abs(n) < 20)
+        if (n < 20)
             resultat += nums0_19(n);
 
         if (n < 0)
@@ -84,7 +93,7 @@ public class NumbersCat {
                 "vint", "trenta", "quaranta", "cinquanta", "seixanta", "setanta", "vuitanta", "noranta"
         };
         //Només volem la desena del nombre en positiu. Ex: -33 -> 3
-        n = Math.abs(n / 10) - 2;
+        n = (n / 10) - 2;
         return desenes[(int) n];
     }
 
@@ -94,7 +103,7 @@ public class NumbersCat {
                 "nou", "deu", "onze", "dotze", "tretze", "catorze", "quinze", "setze",
                 "disset", "divuit", "dinou"
         };
-        return unicNums[Math.abs((int) n)];
+        return unicNums[(int) n];
     }
 
     public static long words(String s) {
@@ -104,5 +113,4 @@ public class NumbersCat {
     public static String oper(String s) {
         return "";
     }
-
 }
