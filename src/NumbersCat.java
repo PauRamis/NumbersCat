@@ -1,4 +1,3 @@
-
 public class NumbersCat {
 
     public static String say(long n) {
@@ -112,9 +111,6 @@ public class NumbersCat {
         }
         if (n < 20)
             resultat += nums0_19(n);
-
-        if (n < 0)
-            resultat = "menys " + resultat;
         return resultat;
     }
 
