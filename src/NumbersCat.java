@@ -11,6 +11,12 @@ public class NumbersCat {
             negatiu = true;
             n = -n;
         }
+
+        if (n <= 9_223_372_036_854_775_807L && n >= 1_000_000_000_000_000_000L){
+            resultat += trillons(n);
+            n = n % 1_000_000_000_000_000_000L;
+        }
+
         if (n < 1_000_000_000_000_000_000L && n >= 1_000_000_000_000L){
             resultat += billons(n);
             n = n % 1_000_000_000_000L;
@@ -33,6 +39,22 @@ public class NumbersCat {
         //eliminam tots els espais sobrants i posam la primera en mayuscules
         resultat = resultat.trim().replaceAll("\\s{2,}", " ");
         return resultat.substring(0, 1).toUpperCase() + resultat.substring(1);
+    }
+
+    private static String trillons(long n) {
+        String resultat = "";
+        if (n/1000 < 1_000_000_000_000_000_000L)
+            resultat = unitatsaCentenes(n/1_000_000_000_000_000_000L);
+        else {
+            resultat = milenes(n/1_000_000_000_000_000_000L);
+
+            long nres = (n/1_000_000_000_000_000_000L) % 1000;
+            resultat += unitatsaCentenes(nres);
+        }
+
+        if (n < 2_000_000_000_000_000_000L)
+            return resultat + " trilió ";
+        return resultat + " trilions ";
     }
 
     private static String billons(long n) {
