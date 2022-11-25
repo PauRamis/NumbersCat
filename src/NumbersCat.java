@@ -7,7 +7,11 @@ public class NumbersCat {
             return "Zero";
         String resultat = "";
 
-        if (Math.abs(n) < 1000000 && Math.abs(n) >= 1000){
+        if (Math.abs(n) < 1_000_000_000_000L && Math.abs(n) >= 1_000_000){
+            resultat += millons(n);
+            n = n % 1_000_000;
+        }
+        if (Math.abs(n) < 1_000_000 && Math.abs(n) >= 1000){
             resultat += milenes(n);
             n = n % 1000;
         }
@@ -18,6 +22,17 @@ public class NumbersCat {
         //eliminam tots els espais sobrants i posam la primera en mayuscules
         resultat = resultat.trim().replaceAll("\\s{2,}", " ");
         return resultat.substring(0, 1).toUpperCase() + resultat.substring(1);
+    }
+
+    private static String millons(long n) {
+        String resultat = "";
+        if (n/1000 < 1_000_000)
+            resultat = unitatsaCentenes(n/1_000_000, resultat);
+        else resultat = milenes(n/1_000_000);
+
+        if (n < 2_000_000)
+            return resultat + " milió ";
+        return resultat + " milions ";
     }
 
     //Funció del 1 al 999

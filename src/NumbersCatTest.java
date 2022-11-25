@@ -44,7 +44,7 @@ public class NumbersCatTest {
 
     @org.junit.Test
     public void test5() {
-        assertEquals("Un milió dos-cents trenta-quatre mil cinc-cents seixanta-set",
+       assertEquals("Un milió dos-cents trenta-quatre mil cinc-cents seixanta-set",
                 NumbersCat.say(1_234_567));
         assertEquals("Vint-i-dos milions cinc-cents quaranta-tres mil",
                 NumbersCat.say(22_543_000));
