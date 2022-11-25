@@ -12,17 +12,17 @@ public class NumbersCat {
         }
 
         if (n >= 1_000_000_000_000_000_000L){
-            resultat += trillons(n);
+            resultat += trilions(n);
             n = n % 1_000_000_000_000_000_000L;
         }
 
         if (n < 1_000_000_000_000_000_000L && n >= 1_000_000_000_000L){
-            resultat += billons(n);
+            resultat += bilions(n);
             n = n % 1_000_000_000_000L;
         }
 
         if (n < 1_000_000_000_000L && n >= 1_000_000){
-            resultat += millons(n);
+            resultat += milions(n);
             n = n % 1_000_000;
         }
         if (n < 1_000_000 && n >= 1000){
@@ -32,15 +32,17 @@ public class NumbersCat {
 
         //Sumam les ultimes unitats al resultat
         resultat += unitatsaCentenes(n);
+
         //Posam el menys si és negatiu
         if (negatiu)
             resultat = "menys " + resultat;
+
         //eliminam tots els espais sobrants i posam la primera en mayuscules
         resultat = resultat.trim().replaceAll("\\s{2,}", " ");
         return resultat.substring(0, 1).toUpperCase() + resultat.substring(1);
     }
 
-    private static String trillons(long n) {
+    private static String trilions(long n) {
         String resultat = "";
         if (n/1000 < 1_000_000_000_000_000_000L)
             resultat = unitatsaCentenes(n/1_000_000_000_000_000_000L);
@@ -56,7 +58,7 @@ public class NumbersCat {
         return resultat + " trilions ";
     }
 
-    private static String billons(long n) {
+    private static String bilions(long n) {
         String resultat = "";
         if (n/1000 < 1_000_000_000_000L)
             resultat = unitatsaCentenes(n/1_000_000_000_000L);
@@ -72,7 +74,7 @@ public class NumbersCat {
         return resultat + " bilions ";
     }
 
-    private static String millons(long n) {
+    private static String milions(long n) {
         String resultat = "";
         if (n/1000 < 1_000_000)
             resultat = unitatsaCentenes(n/1_000_000);
@@ -88,7 +90,6 @@ public class NumbersCat {
         return resultat + " milions ";
     }
 
-    //Funció del 1 al 999
     private static String unitatsaCentenes(long n) {
         String resultat = "";
         if (n < 1000 && n >= 100) {
@@ -134,18 +135,17 @@ public class NumbersCat {
         String[] desenes = {
                 "vint", "trenta", "quaranta", "cinquanta", "seixanta", "setanta", "vuitanta", "noranta"
         };
-        //Només volem la desena del nombre en positiu. Ex: -33 -> 3
         n = (n / 10) - 2;
         return desenes[(int) n];
     }
 
     private static String nums0_19(long n) {
-        String[] unicNums = {
+        String[] nums = {
                 "", "un", "dos", "tres", "quatre", "cinc", "sis", "set", "vuit",
                 "nou", "deu", "onze", "dotze", "tretze", "catorze", "quinze", "setze",
                 "disset", "divuit", "dinou"
         };
-        return unicNums[(int) n];
+        return nums[(int) n];
     }
 
     public static long words(String s) {
