@@ -165,21 +165,23 @@ public class NumbersCat {
 
         //Cream un array separant el numero
         String[] numberWords = s.split("[^a-zA-Z]");
+        long resultatTemp = 0;
         for (int i = 0; i < numberWords.length; i++) {
-            if (numberWords[i].equals("cent")) resultat += 100;
-            resultat += desenesWords(numberWords[i]);
-            resultat += nums0_19Words(numberWords[i]);
+            if (numberWords[i].equals("mil") && resultat < 1000) resultatTemp += 1000;
+            if (numberWords[i].equals("cent") && resultat < 100) resultatTemp += 100;
+            resultatTemp += desenesWords(numberWords[i]);
+            resultatTemp += nums0_19Words(numberWords[i]);
 
             //Els sufixes són multiplicatius, pero hem de mirar que no estem a l'ultim numero
             if (i != numberWords.length-1){
                 if (numberWords[i + 1].equals("cents"))
-                    resultat = resultat * 100;
-                if (numberWords[i + 1].equals("mil"))
-                    resultat = resultat * 1000;
+                    resultatTemp *= 100;
+                if (numberWords[i + 1].equals("mil") )
+                    resultatTemp *= 1000;
             }
-
+            resultat += resultatTemp;
+            resultatTemp = 0;
         }
-
 
         //Si el numero era negatiu, hem de posar el resultat en negatiu
         if (negative)
