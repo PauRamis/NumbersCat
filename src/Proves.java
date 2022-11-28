@@ -1,12 +1,16 @@
 public class Proves {
     public static void main(String[] args) {
-        long n = 1_000_000_000;
+       /* long n = 1_000_000_000;
         long sobrant = n/1_000_000;
-        System.out.println(sobrant);
+        System.out.println(sobrant);*/
+
+        String s = "Menys seixanta-sis";
+        if (s.length() > 6 && s.substring(0, 6).equals("Menys ")){
+            s = s.substring(6);
+        }
+        String[] numberDigits = s.split("[^a-zA-Z]");
+        System.out.println(numberDigits[0]);
 
 
-        /*Pasam el numero a un array d'strings
-        String number = String.valueOf(n);
-        String[] numberDigits = number.split("(?<=.)");*/
     }
 }
