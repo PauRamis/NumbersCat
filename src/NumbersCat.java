@@ -167,8 +167,8 @@ public class NumbersCat {
         String[] numberWords = s.split("[^a-zA-Z]");
         long resultatTemp = 0;
         for (int i = 0; i < numberWords.length; i++) {
-            if (numberWords[i].equals("mil") && resultat < 1000) resultatTemp += 1000;
-            if (numberWords[i].equals("cent") && resultat < 100) resultatTemp += 100;
+            if (numberWords[i].equals("mil")) resultatTemp += 1000;
+            if (numberWords[i].equals("cent")) resultatTemp += 100;
             resultatTemp += desenesWords(numberWords[i]);
             resultatTemp += nums0_19Words(numberWords[i]);
 
@@ -176,7 +176,7 @@ public class NumbersCat {
             if (i != numberWords.length-1){
                 if (numberWords[i + 1].equals("cents"))
                     resultatTemp *= 100;
-                if (numberWords[i + 1].equals("mil") )
+                if (numberWords[i + 1].equals("mil"))
                     resultatTemp *= 1000;
             }
             resultat += resultatTemp;
