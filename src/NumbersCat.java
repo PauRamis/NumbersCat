@@ -165,27 +165,33 @@ public class NumbersCat {
 
         //Cream un array separant el numero
         String[] numberWords = s.split("[^a-zA-Z]");
-        long resultatTemp = 0;
-        for (int i = 0; i < numberWords.length; i++) {
-            if (numberWords[i].equals("mil")) resultatTemp += 1000;
-            if (numberWords[i].equals("cent")) resultatTemp += 100;
-            resultatTemp += desenesWords(numberWords[i]);
-            resultatTemp += nums0_19Words(numberWords[i]);
+        resultat = unitatsaCentenesWords(numberWords);
 
-            //Els sufixes són multiplicatius, pero hem de mirar que no estem a l'ultim numero
-            if (i != numberWords.length-1){
-                if (numberWords[i + 1].equals("cents"))
-                    resultatTemp *= 100;
-                if (numberWords[i + 1].equals("mil"))
-                    resultatTemp *= 1000;
-            }
-            resultat += resultatTemp;
-            resultatTemp = 0;
-        }
 
         //Si el numero era negatiu, hem de posar el resultat en negatiu
         if (negative)
             resultat = -resultat;
+        return resultat;
+    }
+
+    private static long unitatsaCentenesWords(String[] numberWords) {
+        long resultat = 0;
+        long resultatTemp = 0;
+        for (int i = 0; i < numberWords.length; i++) {
+            if (numberWords[i].equals("cent")) resultatTemp += 100;
+            resultatTemp += desenesWords(numberWords[i]);
+            resultatTemp += nums0_19Words(numberWords[i]);
+
+            if (numberWords[i].equals("cents"))
+                resultatTemp *= 100;
+            if (numberWords[i].equals("mil")) {
+                if (resultatTemp == 0) resultatTemp = 1000;
+                else resultatTemp *= 1000;
+                resultat = resultatTemp;
+                resultatTemp = 0;
+            }
+        }
+        resultat += resultatTemp;
         return resultat;
     }
 
