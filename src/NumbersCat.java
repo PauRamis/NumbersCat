@@ -165,8 +165,7 @@ public class NumbersCat {
 
         //Cream un array separant el numero
         String[] numberWords = s.split("[^a-zA-Z]");
-        resultat = unitatsaCentenesWords(numberWords);
-
+        resultat = WordsToNums(numberWords);
 
         //Si el numero era negatiu, hem de posar el resultat en negatiu
         if (negative)
@@ -174,7 +173,7 @@ public class NumbersCat {
         return resultat;
     }
 
-    private static long unitatsaCentenesWords(String[] numberWords) {
+    private static long WordsToNums(String[] numberWords) {
         long resultat = 0;
         long resultatTemp = 0;
         for (int i = 0; i < numberWords.length; i++) {
@@ -185,8 +184,15 @@ public class NumbersCat {
             if (numberWords[i].equals("cents"))
                 resultatTemp *= 100;
             if (numberWords[i].equals("mil")) {
-                if (resultatTemp == 0) resultatTemp = 1000;
-                else resultatTemp *= 1000;
+                if (resultatTemp == 0)
+                    resultatTemp = 1000;
+                else
+                    resultatTemp *= 1000;
+                resultat = resultatTemp;
+                resultatTemp = 0;
+            }
+            if (numberWords[i].equals("milió") || numberWords[i].equals("milions")){
+                resultatTemp *= 1_000_000;
                 resultat = resultatTemp;
                 resultatTemp = 0;
             }
