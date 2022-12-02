@@ -246,6 +246,8 @@ public class NumbersCat {
     }
 
     public static String oper(String s) {
-        return "";
+        String[] operArray = s.split("(més)|(menys)");
+        long result = words(operArray[0]) + words(operArray[1]);
+        return say(result);
     }
 }
