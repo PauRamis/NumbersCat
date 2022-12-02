@@ -165,7 +165,7 @@ public class NumbersCat {
 
         //Cream un array separant el numero
         String[] numberWords = s.split("[^a-zA-Zó]");
-        resultat = WordsToNums(numberWords);
+        resultat = WordsToNums(numberWords, s);
 
         //Si el numero era negatiu, hem de posar el resultat en negatiu
         if (negative)
@@ -173,7 +173,7 @@ public class NumbersCat {
         return resultat;
     }
 
-    private static long WordsToNums(String[] numberWords) {
+    private static long WordsToNums(String[] numberWords, String s) {
         long resultat = 0;
         long resultatTemp = 0;
         for (int i = 0; i < numberWords.length; i++) {
@@ -188,18 +188,30 @@ public class NumbersCat {
                     resultatTemp = 1000;
                 else
                     resultatTemp *= 1000;
-                //Hem de fer aquest if especificament per cuan hi hagi un millió despres de un mil,
-                //eliminant el "millons" després per que no es multipliqui dues vegades
-                if (i + 1 < numberWords.length && numberWords[i + 1].equals("milions")) {
-                    resultatTemp *= 1_000_000;
-                    numberWords[i + 1] = " ";
-                }
                 resultat += resultatTemp;
                 resultatTemp = 0;
             }
             if (numberWords[i].equals("milió") || numberWords[i].equals("milions")) {
                 resultat += resultatTemp;
                 resultat *= 1_000_000;
+                resultatTemp = 0;
+            }
+            if (numberWords[i].equals("bilió") || numberWords[i].equals("bilions")) {
+                resultat += resultatTemp;
+                if (s.contains("milions"))
+                    //Si es multiplicará després per un milló, ho multiplicam per menys ara
+                    resultat *= 1_000_000;
+                else
+                    resultat *= 1_000_000_000_000L;
+                resultatTemp = 0;
+            }
+            if (numberWords[i].equals("trilió") || numberWords[i].equals("trilions")) {
+                resultat += resultatTemp;
+                if (s.contains("bilions"))
+                    //Si es multiplicará després per un milló, ho multiplicam per menys ara
+                    resultat *= 1_000_000_000_000L;
+                else
+                    resultat *= 1_000_000_000_000_000_000L;
                 resultatTemp = 0;
             }
         }
