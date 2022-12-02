@@ -164,7 +164,7 @@ public class NumbersCat {
         }
 
         //Cream un array separant el numero
-        String[] numberWords = s.split("[^a-zA-Z]");
+        String[] numberWords = s.split("[^a-zA-Zó]");
         resultat = WordsToNums(numberWords);
 
         //Si el numero era negatiu, hem de posar el resultat en negatiu
@@ -188,12 +188,18 @@ public class NumbersCat {
                     resultatTemp = 1000;
                 else
                     resultatTemp *= 1000;
-                resultat = resultatTemp;
+                //Hem de fer aquest if especificament per cuan hi hagi un millió despres de un mil,
+                //eliminant el "millons" després per que no es multipliqui dues vegades
+                if (i + 1 < numberWords.length && numberWords[i + 1].equals("milions")) {
+                    resultatTemp *= 1_000_000;
+                    numberWords[i + 1] = " ";
+                }
+                resultat += resultatTemp;
                 resultatTemp = 0;
             }
-            if (numberWords[i].equals("milió") || numberWords[i].equals("milions")){
-                resultatTemp *= 1_000_000;
-                resultat = resultatTemp;
+            if (numberWords[i].equals("milió") || numberWords[i].equals("milions")) {
+                resultat += resultatTemp;
+                resultat *= 1_000_000;
                 resultatTemp = 0;
             }
         }
