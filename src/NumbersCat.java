@@ -207,7 +207,9 @@ public class NumbersCat {
             }
             if (numberWords[i].equals("trilió") || numberWords[i].equals("trilions")) {
                 resultat += resultatTemp;
-                if (s.contains("bilions"))
+                if (s.contains("bilions") && s.contains("milions"))
+                    resultat *= 1_000_000;
+                else if (s.contains("bilions") || s.contains("milions"))
                     //Si es multiplicará després per un milló, ho multiplicam per menys ara
                     resultat *= 1_000_000_000_000L;
                 else
