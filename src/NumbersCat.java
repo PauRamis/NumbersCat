@@ -238,30 +238,31 @@ public class NumbersCat {
     }
 
     public static String oper(String s) {
-        String[] opernumeros = s.split("(més)|(menys)|(per)|(dividit)");
-        long result = words(opernumeros[0]);
+        String[] operNumeros = s.split("(més)|(menys)|(per)|(dividit)");
+        long result = words(operNumeros[0]);
         int posicio = 0;
         String signe;
-        for (int i = 1; i < opernumeros.length-1; i++) {
+        for (int i = 1; i < operNumeros.length; i++) {
             signe = trobarSigne(s, posicio);
             if (signe.equals("més"))
-                result += words(opernumeros[i]);
+                result += words(operNumeros[i]);
             if (signe.equals("menys"))
-                result -= words(opernumeros[i]);
+                result -= words(operNumeros[i]);
             if (signe.equals("per"))
-                result *= words(opernumeros[i]);
+                result *= words(operNumeros[i]);
             if (signe.equals("dividit"))
-                result = result / (words(opernumeros[i]));
-
-            posicio =  trobarPosició(s);
+                result = result / words(operNumeros[i]);
+            posicio = trobarPosició(s, posicio);
         }
+
+
 
         return say(result);
     }
 
-    private static int trobarPosició(String s) {
+    private static int trobarPosició(String s, int posicio) {
         String[] paraules = s.split(" ");
-        for (int i = 0; i < paraules.length; i++) {
+        for (int i = posicio; i < paraules.length; i++) {
             if (paraules[i].equals("més") || paraules[i].equals("menys") || paraules[i].equals("per") || paraules[i].equals("dividit"))
                 return i;
         }
