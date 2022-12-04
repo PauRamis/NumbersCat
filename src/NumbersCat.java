@@ -1,7 +1,7 @@
 public class NumbersCat {
 
     public static String say(long n) {
-        //Zero es una exepció que només es dona en aquest cas
+        //Zero és una excepció que només es dona en aquest cas
         if (n == 0)
             return "Zero";
         String resultat = "";
@@ -16,42 +16,33 @@ public class NumbersCat {
             n = n % 1_000_000_000_000_000_000L;
         }
 
-        if (n < 1_000_000_000_000_000_000L && n >= 1_000_000_000_000L) {
+        if (n >= 1_000_000_000_000L) {
             resultat += bilions(n);
             n = n % 1_000_000_000_000L;
         }
 
-        if (n < 1_000_000_000_000L && n >= 1_000_000) {
+        if (n >= 1_000_000) {
             resultat += milions(n);
             n = n % 1_000_000;
         }
-        if (n < 1_000_000 && n >= 1000) {
+        if (n >= 1000) {
             resultat += milenes(n);
             n = n % 1000;
         }
 
-        //Sumam les ultimes unitats al resultat
         resultat += unitatsaCentenes(n);
 
-        //Posam el menys si és negatiu
         if (negatiu)
             resultat = "menys " + resultat;
 
-        //eliminam tots els espais sobrants i posam la primera en mayuscules
+        //eliminem tots els espais sobrants i posem la primera en majúscules
         resultat = resultat.trim().replaceAll("\\s{2,}", " ");
         return resultat.substring(0, 1).toUpperCase() + resultat.substring(1);
     }
 
     private static String trilions(long n) {
-        String resultat = "";
-        if (n / 1000 < 1_000_000_000_000_000_000L)
-            resultat = unitatsaCentenes(n / 1_000_000_000_000_000_000L);
-        else {
-            resultat = milenes(n / 1_000_000_000_000_000_000L);
-
-            long nres = (n / 1_000_000_000_000_000_000L) % 1000;
-            resultat += unitatsaCentenes(nres);
-        }
+        String resultat;
+        resultat = unitatsaCentenes(n / 1_000_000_000_000_000_000L);
 
         if (n < 2_000_000_000_000_000_000L)
             return resultat + " trilió ";
@@ -59,14 +50,14 @@ public class NumbersCat {
     }
 
     private static String bilions(long n) {
-        String resultat = "";
+        String resultat;
         if (n / 1000 < 1_000_000_000_000L)
             resultat = unitatsaCentenes(n / 1_000_000_000_000L);
         else {
             resultat = milenes(n / 1_000_000_000_000L);
 
-            long nres = (n / 1_000_000_000_000L) % 1000;
-            resultat += unitatsaCentenes(nres);
+            long nRes = (n / 1_000_000_000_000L) % 1000;
+            resultat += unitatsaCentenes(nRes);
         }
 
         if (n < 2_000_000_000_000L)
@@ -75,7 +66,7 @@ public class NumbersCat {
     }
 
     private static String milions(long n) {
-        String resultat = "";
+        String resultat;
         if (n / 1000 < 1_000_000)
             resultat = unitatsaCentenes(n / 1_000_000);
         else {
@@ -100,11 +91,11 @@ public class NumbersCat {
         if (n < 100 && n >= 20) {
             boolean vintena = false;
             resultat += desenes(n);
-            if (desenes(n) == "vint")
+            if (desenes(n).equals("vint"))
                 vintena = true;
             n = n % 10;
-            if (n < 20 && n != 0) {
-                if (vintena == true)
+            if (n != 0) {
+                if (vintena)
                     resultat += "-i-";
                 else
                     resultat += "-";
@@ -116,7 +107,7 @@ public class NumbersCat {
     }
 
     private static String milenes(long n) {
-        String milena = "";
+        String milena;
         if (n < 2000)
             return "mil ";
         milena = unitatsaCentenes((n / 1000));
@@ -152,11 +143,11 @@ public class NumbersCat {
         boolean negative = false;
         long resultat = 0;
 
-        //Ens llevam el zero de damunt
+        //Ens llevem el zero de damunt
         if (s.equals("Zero"))
             return resultat;
 
-        //Eliminam els negatius i les mayuscules
+        //Eliminem els negatius i les mayuscules
         s = s.substring(0, 1).toLowerCase() + s.substring(1);
         if (s.length() > 6 && s.substring(0, 6).equals("menys ")) {
             s = s.substring(6);
@@ -167,7 +158,7 @@ public class NumbersCat {
         String[] numberWords = s.split("[^a-zA-Zó]");
         resultat = WordsToNums(numberWords, s);
 
-        //Si el numero era negatiu, hem de posar el resultat en negatiu
+        //Si el número era negatiu, hem de posar el resultat en negatiu
         if (negative)
             resultat = -resultat;
         return resultat;
@@ -199,7 +190,7 @@ public class NumbersCat {
             if (numberWords[i].equals("bilió") || numberWords[i].equals("bilions")) {
                 resultat += resultatTemp;
                 if (s.contains("milions"))
-                    //Si es multiplicará després per un milló, ho multiplicam per menys ara
+                    //Si es multiplicarà després per un milió, ara ho multipliquem per menys.
                     resultat *= 1_000_000;
                 else
                     resultat *= 1_000_000_000_000L;
@@ -210,7 +201,7 @@ public class NumbersCat {
                 if (s.contains("bilions") && s.contains("milions"))
                     resultat *= 1_000_000;
                 else if (s.contains("bilions") || s.contains("milions"))
-                    //Si es multiplicará després per un milló, ho multiplicam per menys ara
+                    //Si es multiplicarà després per un milió i/o bilió, ara ho multipliquem per menys.
                     resultat *= 1_000_000_000_000L;
                 else
                     resultat *= 1_000_000_000_000_000_000L;
