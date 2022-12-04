@@ -237,8 +237,19 @@ public class NumbersCat {
     }
 
     public static String oper(String s) {
-        String[] operArray = s.split("(més)|(menys)");
-        long result = words(operArray[0]) + words(operArray[1]);
+        String[] operArray = s.split(" ");
+        long result = 0;
+        for (int i = 0; i < operArray.length; i = i+3) {
+            if (i+1<operArray.length && operArray[i+1].equals("més"))
+                result += words(operArray[i]) + words(operArray[i+2]);
+            if (i+1<operArray.length && operArray[i+1].equals("menys"))
+                result += words(operArray[i]) - words(operArray[i+2]);
+            if (i+1<operArray.length && operArray[i+1].equals("per"))
+                result += words(operArray[i]) * words(operArray[i+2]);
+            if (i+1<operArray.length && operArray[i+1].equals("dividit"))
+                result += words(operArray[i]) / words(operArray[i+2]);
+        }
+
         return say(result);
     }
 }
