@@ -147,7 +147,8 @@ public class NumbersCat {
         if (s.equals("Zero"))
             return resultat;
 
-        //Eliminem els negatius i les mayuscules
+        //Eliminem els negatius, els espais sobrants i les mayuscules
+        s = s.trim();
         s = s.substring(0, 1).toLowerCase() + s.substring(1);
         if (s.length() > 6 && s.substring(0, 6).equals("menys ")) {
             s = s.substring(6);
@@ -237,19 +238,64 @@ public class NumbersCat {
     }
 
     public static String oper(String s) {
-        String[] operArray = s.split(" ");
+        String[] opernumeros = s.split("(més)|(menys)|(per)|(dividit)");
         long result = 0;
-        for (int i = 0; i < operArray.length; i = i+3) {
-            if (i+1<operArray.length && operArray[i+1].equals("més"))
-                result += words(operArray[i]) + words(operArray[i+2]);
-            if (i+1<operArray.length && operArray[i+1].equals("menys"))
-                result += words(operArray[i]) - words(operArray[i+2]);
-            if (i+1<operArray.length && operArray[i+1].equals("per"))
-                result += words(operArray[i]) * words(operArray[i+2]);
-            if (i+1<operArray.length && operArray[i+1].equals("dividit"))
-                result += words(operArray[i]) / words(operArray[i+2]);
+        int posicio = 0;
+        String signe = trobarSigne(s, posicio);
+        for (int i = 0; i < opernumeros.length/2; i++) {
+            if (signe.equals("més"))
+                result += words(opernumeros[0]) + words(opernumeros[1]);
+            if (signe.equals("menys"))
+                result += words(opernumeros[0]) - words(opernumeros[1]);
+            if (signe.equals("per"))
+                result += words(opernumeros[0]) * words(opernumeros[1]);
+            if (signe.equals("dividit"))
+                result += words(opernumeros[0]) / words(opernumeros[1]);
         }
+
+
 
         return say(result);
     }
+
+    private static int trobarPosició(String s) {
+        String[] paraules = s.split(" ");
+        for (int i = 0; i < paraules.length; i++) {
+            if (paraules[i].equals("més") || paraules[i].equals("menys") || paraules[i].equals("per") || paraules[i].equals("dividit"))
+                return i;
+        }
+        return 0;
+    }
+
+    private static String trobarSigne(String s, int posicio) {
+        String[] paraules = s.split(" ");
+        for (int i = posicio; i < paraules.length; i++) {
+            if (paraules[i].equals("més") || paraules[i].equals("menys") || paraules[i].equals("per") || paraules[i].equals("dividit"))
+                return paraules[i];
+        }
+        return "";
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
