@@ -264,7 +264,7 @@ public class NumbersCat {
         String[] paraules = s.split(" ");
         for (int i = posicio; i < paraules.length; i++) {
             if (paraules[i].equals("més") || paraules[i].equals("menys") || paraules[i].equals("per") || paraules[i].equals("dividit"))
-                return i;
+                return i+1;
         }
         return 0;
     }
