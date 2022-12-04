@@ -239,21 +239,22 @@ public class NumbersCat {
 
     public static String oper(String s) {
         String[] opernumeros = s.split("(més)|(menys)|(per)|(dividit)");
-        long result = 0;
+        long result = words(opernumeros[0]);
         int posicio = 0;
-        String signe = trobarSigne(s, posicio);
-        for (int i = 0; i < opernumeros.length/2; i++) {
+        String signe;
+        for (int i = 1; i < opernumeros.length-1; i++) {
+            signe = trobarSigne(s, posicio);
             if (signe.equals("més"))
-                result += words(opernumeros[0]) + words(opernumeros[1]);
+                result += words(opernumeros[i]);
             if (signe.equals("menys"))
-                result += words(opernumeros[0]) - words(opernumeros[1]);
+                result -= words(opernumeros[i]);
             if (signe.equals("per"))
-                result += words(opernumeros[0]) * words(opernumeros[1]);
+                result *= words(opernumeros[i]);
             if (signe.equals("dividit"))
-                result += words(opernumeros[0]) / words(opernumeros[1]);
+                result = result / (words(opernumeros[i]));
+
+            posicio =  trobarPosició(s);
         }
-
-
 
         return say(result);
     }
